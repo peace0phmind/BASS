@@ -62,6 +62,10 @@ const manifest = {
   side_panel: {
     default_path: 'side-panel/index.html',
   },
+  background: {
+    service_worker: 'background.js',
+    type: 'module',
+  },
 } satisfies chrome.runtime.ManifestV3;
 
 export default manifest;
