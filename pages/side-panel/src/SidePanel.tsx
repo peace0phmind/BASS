@@ -1,7 +1,7 @@
 import '@src/SidePanel.css';
 import { useStorage, withErrorBoundary, withSuspense } from '@extension/shared';
 import { exampleThemeStorage } from '@extension/storage';
-import { Button } from '@extension/ui';
+import { Button, Card } from '@extension/ui';
 import { t } from '@extension/i18n';
 
 const SidePanel = () => {
@@ -12,17 +12,11 @@ const SidePanel = () => {
     chrome.tabs.create({ url: 'https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite' });
 
   return (
-    <div className={`App ${isLight ? 'bg-slate-50' : 'bg-gray-800'}`}>
-      <header className={`App-header ${isLight ? 'text-gray-900' : 'text-gray-100'}`}>
-        <button onClick={goGithubSite}>
-          <img src={chrome.runtime.getURL(logo)} className="App-logo" alt="logo" />
-        </button>
-        <p>
-          Edit <code>pages/side-panel/src/SidePanel.tsx</code>
-        </p>
-        <Button onClick={exampleThemeStorage.toggle}>{t('toggleTheme')}</Button>
-      </header>
-    </div>
+    <Card className={`App`}>
+      <Button variant="default" onClick={exampleThemeStorage.toggle}>
+        {t('toggleTheme')}
+      </Button>
+    </Card>
   );
 };
 
