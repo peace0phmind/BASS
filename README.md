@@ -148,12 +148,41 @@ For detailed documentation, visit our [Documentation Site](https://docs.bass-agi
 
 ## Architecture
 
-BASS is built on a modern tech stack including:
+BASS is built on a modern, modular tech stack:
 
-- React + TypeScript for the frontend interface
-- Vite for fast development and optimized builds
-- State-of-the-art AI models for agent intelligence
-- Browser automation libraries for web interaction
+- **Frontend**: 
+  - React 19 + TypeScript for the user interface
+  - TailwindCSS for styling
+  - Vite for fast development and optimized builds
+
+- **Extension Architecture**:
+  - Chrome Extension Manifest V3 compatible
+  - Firefox compatibility support
+  - Modular structure with separate pages for different extension views:
+    - Popup
+    - Options
+    - Side Panel
+    - Content Scripts
+    - DevTools integration
+
+- **Project Structure**:
+  - Monorepo architecture using pnpm workspaces
+  - TurboRepo for efficient build pipeline and task orchestration
+  - Shared packages for common functionality:
+    - UI components
+    - i18n (internationalization)
+    - Storage utilities
+    - Environment configuration
+
+- **Development Tools**:
+  - ESLint and Prettier for code quality
+  - TypeScript for type safety
+  - Husky for Git hooks
+  - Automated build and packaging scripts
+
+- **AI Integration**:
+  - State-of-the-art AI models for agent intelligence
+  - Browser automation libraries for web interaction
 
 **Special Thanks**: This project utilizes the [chrome-extension-boilerplate-react-vite](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite) by Jonghakseo as the foundation for its Chrome extension implementation.
 
@@ -175,27 +204,39 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 `#multi-agent` `#agi` `#rpa` `#browser-automation` `#autonomous-agents` `#web-agents` `#intelligent-automation`
 
-## Chrome Extension Packaging Instructions
 
-This project can be packaged as a Chrome extension. Follow these steps:
+## Pages
 
-### Build the Extension
+Code that is transpiled to be part of the extension lives in the pages directory.
 
-```bash
-# Install dependencies
-npm install
+* content - content scripts (content_scripts in manifest.json)
+* content-ui - React UI rendered in the current page (you can see it at the very * bottom when you get started) (content_scripts in manifest.json)
+* content-runtime - injected content scripts; this can be injected from popup like standard content
+* devtools - extend the browser DevTools (devtools_page in manifest.json)
+* devtools-panel - DevTools panel for devtools
+* new-tab - override the default New Tab page (chrome_url_overrides.newtab in manifest.json)
+* options - options page (options_page in manifest.json)
+* popup - popup shown when clicking the extension in the toolbar (action.default_popup in manifest.json)
+* side-panel - sidepanel (Chrome 114+) (side_panel.default_path in manifest.json)
 
-# Package the Chrome extension
-npm run build:extension
-```
 
-After packaging, the extension files will be generated in the `dist-extension` directory.
+## Packages
 
-### Install the Extension
+Some shared packages:
 
-1. Open Chrome browser
-2. Go to `chrome://extensions/`
-3. Enable "Developer mode" in the top right corner
-4. Click "Load unpacked"
-5. Select the `dist-extension` directory in the project
+* dev-utils - utilities for Chrome extension development (manifest-parser, logger)
+* env - exports object which contain all environment variables from .env and dynamically declared
+* hmr - custom HMR plugin for Vite, injection script for reload/refresh, HMR dev-server
+* i18n - custom internationalization package; provides i18n function with type safety and other validation
+* shared - shared code for the entire project (types, constants, custom hooks, components etc.)
+* storage - helpers for easier integration with storage, e.g. local/session storages
+* tailwind-config - shared Tailwind config for entire project
+* tsconfig - shared tsconfig for the entire project
+* ui - function to merge your Tailwind config with the global one; you can save components here
+* vite-config - shared Vite config for the entire project
 
+### Other useful packages:
+
+* zipper - run pnpm zip to pack the dist folder into extension-YYYYMMDD-HHmmss.zip inside the newly created dist-zip
+* module-manager - run pnpm module-manager to enable/disable modules
+* e2e - run pnpm e2e for end-to-end tests of your zipped extension on different browsers

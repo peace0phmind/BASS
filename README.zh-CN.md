@@ -148,12 +148,49 @@ npm run dev
 
 ## 架构
 
-BASS基于现代技术栈构建，包括：
+BASS基于现代、模块化的技术栈构建：
 
-- React + TypeScript前端界面
-- Vite用于快速开发和优化构建
-- 最先进的AI模型提供代理智能
-- 浏览器自动化库用于网络交互
+- **前端**：
+  - React 19 + TypeScript用于用户界面
+  - TailwindCSS用于样式设计
+  - Vite用于快速开发和优化构建
+
+- **扩展架构**：
+  - 兼容Chrome扩展Manifest V3
+  - 支持Firefox兼容性
+  - 模块化结构，为不同的扩展视图提供单独的页面：
+    - 弹出窗口
+    - 选项
+    - 侧边面板
+    - 内容脚本
+    - DevTools集成
+
+- **项目结构**：
+  - 使用pnpm工作区的Monorepo架构
+  - TurboRepo用于高效构建流水线和任务编排
+  - 共享包用于常见功能：
+    - UI组件
+    - i18n（国际化）
+    - 存储实用工具
+    - 环境配置
+
+- **开发工具**：
+  - ESLint和Prettier用于代码质量
+  - TypeScript用于类型安全
+  - Husky用于Git钩子
+  - 自动化构建和打包脚本
+
+- **AI集成**：
+  - 最先进的AI模型提供代理智能
+  - 浏览器自动化库用于网络交互
+
+**特别鸣谢**：本项目使用Jonghakseo的[chrome-extension-boilerplate-react-vite](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite)作为其Chrome扩展实现的基础。
+
+## 致谢
+
+我们要向以下项目和贡献者表示感谢：
+
+- 感谢Jonghakseo的[chrome-extension-boilerplate-react-vite](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite)，为使用React和Vite进行Chrome扩展开发提供了优秀的样板。
 
 ## 贡献
 
@@ -167,26 +204,37 @@ BASS基于现代技术栈构建，包括：
 
 `#multi-agent` `#agi` `#rpa` `#browser-automation` `#autonomous-agents` `#web-agents` `#intelligent-automation`
 
-## Chrome 扩展打包说明
+## 页面
 
-这个项目可以打包为 Chrome 扩展。按照以下步骤操作：
+转译为扩展一部分的代码位于pages目录中。
 
-### 构建扩展
+* content - 内容脚本（manifest.json中的content_scripts）
+* content-ui - 在当前页面中渲染的React UI（开始时可以在最底部看到）（manifest.json中的content_scripts）
+* content-runtime - 注入的内容脚本；可以像标准内容一样从弹出窗口注入
+* devtools - 扩展浏览器DevTools（manifest.json中的devtools_page）
+* devtools-panel - 用于devtools的DevTools面板
+* new-tab - 覆盖默认的新标签页（manifest.json中的chrome_url_overrides.newtab）
+* options - 选项页面（manifest.json中的options_page）
+* popup - 点击工具栏中的扩展时显示的弹出窗口（manifest.json中的action.default_popup）
+* side-panel - 侧边面板（Chrome 114+）（manifest.json中的side_panel.default_path）
 
-```bash
-# 安装依赖
-npm install
+## 包
 
-# 打包 Chrome 扩展
-npm run build:extension
-```
+一些共享包：
 
-打包完成后，扩展文件将在 `dist-extension` 目录中生成。
+* dev-utils - Chrome扩展开发的实用工具（manifest-parser、logger）
+* env - 导出包含.env中所有环境变量和动态声明的对象
+* hmr - Vite的自定义HMR插件、用于重新加载/刷新的注入脚本、HMR开发服务器
+* i18n - 自定义国际化包；提供具有类型安全和其他验证的i18n函数
+* shared - 整个项目的共享代码（类型、常量、自定义钩子、组件等）
+* storage - 更容易与存储集成的辅助工具，例如本地/会话存储
+* tailwind-config - 整个项目的共享Tailwind配置
+* tsconfig - 整个项目的共享tsconfig
+* ui - 将您的Tailwind配置与全局配置合并的函数；您可以在这里保存组件
+* vite-config - 整个项目的共享Vite配置
 
-### 安装扩展
+### 其他有用的包：
 
-1. 打开 Chrome 浏览器
-2. 进入 `chrome://extensions/` 页面
-3. 开启右上角的 "开发者模式"
-4. 点击 "加载已解压的扩展程序"
-5. 选择项目中的 `dist-extension` 目录
+* zipper - 运行pnpm zip将dist文件夹打包成新创建的dist-zip中的extension-YYYYMMDD-HHmmss.zip
+* module-manager - 运行pnpm module-manager启用/禁用模块
+* e2e - 运行pnpm e2e对不同浏览器上的压缩扩展进行端到端测试
