@@ -2,9 +2,9 @@
 
 ## Overview
 
-BASS (Browser Agent Script System) is an advanced framework for creating and orchestrating autonomous browser agents. It enables the development of sophisticated multi-agent systems capable of performing complex web-based tasks through intelligent automation. **Its core functionality is to allow LLMs to automatically analyze web page structures and generate repeatable scripts based on user instructions.**
+BASS (Browser Agent Script System) is an advanced framework for creating and orchestrating autonomous browser agents. It supports the development of multi-agent systems capable of performing complex web tasks through intelligent automation. **Its core functionality is to allow LLMs to automatically analyze web page structures and generate repeatable scripts based on user instructions.** For security considerations, most features of the initially installed plugin will be disabled, and users can enable them after fully understanding the functionality.
 
-The system starts with a small, self-bootstrapping core that first provides webpage analysis and script generation capabilities, then gradually expands to more complex multi-agent systems. The project combines a shareable script repository, leveraging community power to quickly build a large number of system automation script support.
+The system starts with a small, self-bootstrapping core that first provides webpage analysis and script generation capabilities, then gradually expands to more complex multi-agent systems. The project combines a shareable script repository, leveraging community power to quickly build a large number of system automation script support. In fully open mode, the system can search for appropriate scripts in the Script Hub and run them automatically. In secure mode, users can work with AI to review each downloaded script for potential security vulnerabilities and decide whether to use the script.
 
 ## Key Features
 
