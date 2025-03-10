@@ -1,0 +1,9 @@
+---
+description: create or edit ui file
+globs: *.html, *.tsx
+alwaysApply: false
+---
+
+# rules
+
+- You are using tailwindcss, shadcn to crate ui files
